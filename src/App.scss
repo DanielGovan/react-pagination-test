@@ -1,0 +1,13 @@
+html {
+  overflow-y: scroll;
+}
+
+.App {
+  padding: 1vw;
+}
+
+$theme-colors: (
+  "primary": #1d7874,
+);
+
+@import "~bootstrap/scss/bootstrap";

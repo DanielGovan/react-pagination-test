@@ -1,25 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Results from "./components/Results";
+import BookPaging from "./components/BookPaging";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
+
+import "./App.scss";
 
 function App() {
+  const [pageNumber, setPageNumber] = useState(1);
+  const [totalCount, setTotalCount] = useState(1);
+  const booksPerPage = 40;
+
+  // let { page } = useParams();
+
+  // useEffect(() => {
+  //   setPageNumber(page);
+  // }, [page]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {/* <Route path="/{page}/" component={Component} /> */}
+      <div className="App">
+        <h1>Page {pageNumber}</h1>
+        <BookPaging
+          pageNumber={pageNumber}
+          setPageNumber={(e) => setPageNumber(e)}
+          totalCount={totalCount}
+          booksPerPage={booksPerPage}
+        />
+        <Results
+          pageNumber={pageNumber}
+          setTotalCount={setTotalCount}
+          booksPerPage={booksPerPage}
+        />
+      </div>
+    </Router>
   );
 }
 
