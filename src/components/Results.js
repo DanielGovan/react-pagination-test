@@ -42,7 +42,7 @@ const Results = ({ setTotalCount, booksPerPage }) => {
         console.log("Fetch success", response.books, response.count);
       })
       .catch((error) => console.log("Fetch error", error));
-  }, [pageNumber]);
+  }, [pageNumber, setTotalCount, booksPerPage]);
 
   return (
     <ListGroup>
