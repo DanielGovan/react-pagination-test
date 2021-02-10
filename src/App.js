@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Results from "./components/Results";
 import BookPaging from "./components/BookPaging";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.scss";
 
 const App = ({ pageNumber, setPageNumber }) => {
-  const [] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
   const booksPerPage = 40;
 
   return (
-    <div className="App">
-      <Router>
+    <Router>
+      <div className="App">
         <h1>Page {pageNumber}</h1>
         <BookPaging
           pageNumber={pageNumber}
@@ -27,16 +20,15 @@ const App = ({ pageNumber, setPageNumber }) => {
           booksPerPage={booksPerPage}
         />
         <Switch>
-          <Route path="/:page">
+          <Route path="/:id">
             <Results
               setTotalCount={setTotalCount}
               booksPerPage={booksPerPage}
             />
           </Route>
         </Switch>
-      </Router>
-      <Results />
-    </div>
+      </div>
+    </Router>
   );
 };
 

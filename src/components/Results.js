@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import styled from "styled-components";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Loading = styled.h2`
   margin: 20vh auto;
@@ -18,11 +12,11 @@ const Results = ({ setTotalCount, booksPerPage }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
 
-  // let { page } = useParams();
+  let { id } = useParams();
 
-  // useEffect(() => {
-  //   setPageNumber(page);
-  // }, [page]);
+  useEffect(() => {
+    setPageNumber(id);
+  }, [id]);
 
   const url = "http://nyx.vima.ekt.gr:3000/api/books";
 
