@@ -24,7 +24,7 @@ const Results = ({ setTotalCount, booksPerPage, filters }) => {
     setResultsPage(response.books);
     setTotalCount(response.count);
     setIsLoading(false);
-    console.log("Fetch success", response.books, response.count);
+    // console.log("Fetch success", response.books, response.count);
   };
 
   const fetchBooks = (pageNumber = 1, filters = []) => {
@@ -48,14 +48,13 @@ const Results = ({ setTotalCount, booksPerPage, filters }) => {
   };
 
   useEffect(() => {
-    console.log("Page attempt", pageNumber);
+    // console.log("Page attempt", pageNumber);
     setIsLoading(true);
     fetchBooks(pageNumber, []);
   }, [pageNumber]);
 
   useEffect(() => {
-    //Turn words into array
-    console.log("Search attempt", filters);
+    // console.log("Search attempt", filters);
     setIsLoading(true);
     !filters
       ? fetchBooks(pageNumber, [])
