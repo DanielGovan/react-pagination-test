@@ -7,7 +7,7 @@ const Loading = styled.h2`
   margin: 20vh auto;
 `;
 
-const Results = ({ setTotalCount, booksPerPage }) => {
+const Results = ({ setTotalCount, booksPerPage, filters }) => {
   const [resultsPage, setResultsPage] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
@@ -20,9 +20,15 @@ const Results = ({ setTotalCount, booksPerPage }) => {
 
   const url = "http://nyx.vima.ekt.gr:3000/api/books";
 
-  useEffect(() => {
-    setIsLoading(true);
-    fetch(`${url}?page=${pageNumber}`, {
+  const success = (response) => {
+    setResultsPage(response.books);
+    setTotalCount(response.count);
+    setIsLoading(false);
+    console.log("Fetch success", response.books, response.count);
+  };
+
+  const fetchBooks = (pageNumber = 1, filters = []) => {
+    return fetch(url, {
       method: "post",
       headers: {
         Accept: "application/json",
@@ -31,18 +37,30 @@ const Results = ({ setTotalCount, booksPerPage }) => {
       body: JSON.stringify({
         page: pageNumber,
         itemsPerPage: booksPerPage,
-        // filters: filters == "delete" ? [] : filters,
+        filters: filters,
       }),
     })
       .then((res) => res.json())
       .then((response) => {
-        setResultsPage(response.books);
-        setTotalCount(response.count);
-        setIsLoading(false);
-        console.log("Fetch success", response.books, response.count);
+        success(response);
       })
       .catch((error) => console.log("Fetch error", error));
-  }, [pageNumber, setTotalCount, booksPerPage]);
+  };
+
+  useEffect(() => {
+    console.log("Page attempt", pageNumber);
+    setIsLoading(true);
+    fetchBooks(pageNumber, []);
+  }, [pageNumber]);
+
+  useEffect(() => {
+    //Turn words into array
+    console.log("Search attempt", filters);
+    setIsLoading(true);
+    !filters
+      ? fetchBooks(pageNumber, [])
+      : fetchBooks(1, [{ type: "all", values: [filters] }]);
+  }, [filters]);
 
   return (
     <ListGroup>
