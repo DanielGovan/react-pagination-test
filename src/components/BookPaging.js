@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ListFrame = styled.div`
   max-width: 98vw;
@@ -10,7 +12,7 @@ const ListFrame = styled.div`
 const BookPaging = ({
   pageNumber,
   booksPerPage,
-  setPageNumber,
+  // setPageNumber,
   totalCount,
 }) => {
   useEffect(() => {
@@ -22,13 +24,11 @@ const BookPaging = ({
   let items = [];
   for (let number = 1; number <= total; number++) {
     items.push(
-      <Pagination.Item
-        key={number}
-        active={number === active}
-        onClick={() => setPageNumber(number)}
-      >
-        {number}
-      </Pagination.Item>
+      <LinkContainer to={`/${number}/`}>
+        <Pagination.Item key={number} active={number === active}>
+          {number}
+        </Pagination.Item>
+      </LinkContainer>
     );
   }
 

@@ -11,21 +11,14 @@ import {
 
 import "./App.scss";
 
-function App() {
-  const [pageNumber, setPageNumber] = useState(1);
+const App = ({ pageNumber, setPageNumber }) => {
+  const [] = useState(1);
   const [totalCount, setTotalCount] = useState(1);
   const booksPerPage = 40;
 
-  // let { page } = useParams();
-
-  // useEffect(() => {
-  //   setPageNumber(page);
-  // }, [page]);
-
   return (
-    <Router>
-      {/* <Route path="/{page}/" component={Component} /> */}
-      <div className="App">
+    <div className="App">
+      <Router>
         <h1>Page {pageNumber}</h1>
         <BookPaging
           pageNumber={pageNumber}
@@ -33,14 +26,18 @@ function App() {
           totalCount={totalCount}
           booksPerPage={booksPerPage}
         />
-        <Results
-          pageNumber={pageNumber}
-          setTotalCount={setTotalCount}
-          booksPerPage={booksPerPage}
-        />
-      </div>
-    </Router>
+        <Switch>
+          <Route path="/:page">
+            <Results
+              setTotalCount={setTotalCount}
+              booksPerPage={booksPerPage}
+            />
+          </Route>
+        </Switch>
+      </Router>
+      <Results />
+    </div>
   );
-}
+};
 
 export default App;

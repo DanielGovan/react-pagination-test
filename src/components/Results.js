@@ -1,14 +1,28 @@
 import React, { useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import styled from "styled-components";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+} from "react-router-dom";
 
 const Loading = styled.h2`
   margin: 20vh auto;
 `;
 
-const Results = ({ pageNumber, setTotalCount, booksPerPage }) => {
+const Results = ({ setTotalCount, booksPerPage }) => {
   const [resultsPage, setResultsPage] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  // let { page } = useParams();
+
+  // useEffect(() => {
+  //   setPageNumber(page);
+  // }, [page]);
 
   const url = "http://nyx.vima.ekt.gr:3000/api/books";
 
@@ -37,19 +51,17 @@ const Results = ({ pageNumber, setTotalCount, booksPerPage }) => {
   }, [pageNumber]);
 
   return (
-    <>
-      <ListGroup>
-        {!isLoading &&
-          resultsPage &&
-          resultsPage.length > 0 &&
-          resultsPage.map((item, i) => (
-            <ListGroup.Item key={i}>
-              {item.book_title} - {item.book_publication_year}
-            </ListGroup.Item>
-          ))}
-        {isLoading && <Loading>Loading results</Loading>}
-      </ListGroup>
-    </>
+    <ListGroup>
+      {!isLoading &&
+        resultsPage &&
+        resultsPage.length > 0 &&
+        resultsPage.map((item, i) => (
+          <ListGroup.Item key={i}>
+            {item.book_title} - {item.book_publication_year}
+          </ListGroup.Item>
+        ))}
+      {isLoading && <Loading>Loading results</Loading>}
+    </ListGroup>
   );
 };
 
